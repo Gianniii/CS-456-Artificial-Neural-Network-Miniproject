@@ -27,12 +27,12 @@ class TictactoeEnv:
     '''
 
     def __init__(self):
-        self.grid = np.zeros((3,3))
+        self.grid = np.zeros((3, 3))
         self.end = False
         self.winner = None
         self.player2value = {'X': 1, 'O': -1}
         self.num_step = 0
-        self.current_player = 'X' # By default, player 'X' goes first
+        self.current_player = 'X'  # By default, player 'X' goes first
 
     def check_valid(self, position):
         ''' Check whether the current action is valid or not
@@ -58,13 +58,14 @@ class TictactoeEnv:
         elif type(position) is not tuple:
             position = tuple(position)
         if self.grid[position] != 0:
-            raise ValueError('There is already a chess on position {}.'.format(position))
+            raise ValueError(
+                'There is already a chess on position {}.'.format(position))
 
         # place a chess on the position
         self.grid[position] = self.player2value[self.current_player]
         # update
         self.num_step += 1
-        self.current_player = 'X' if self.num_step % 2 == 0 else  'O'
+        self.current_player = 'X' if self.num_step % 2 == 0 else 'O'
         # check whether the game ends or not
         self.checkEnd()
 
@@ -85,23 +86,23 @@ class TictactoeEnv:
             self.end = True
             self.winner = 'O'
         # check diagnols
-        elif self.grid[[0,1,2],[0,1,2]].sum() == 3 or self.grid[[0,1,2],[2,1,0]].sum() == 3:
+        elif self.grid[[0, 1, 2], [0, 1, 2]].sum() == 3 or self.grid[[0, 1, 2], [2, 1, 0]].sum() == 3:
             self.end = True
             self.winner = 'X'
-        elif self.grid[[0,1,2],[0,1,2]].sum() == -3 or self.grid[[0,1,2],[2,1,0]].sum() == -3:
+        elif self.grid[[0, 1, 2], [0, 1, 2]].sum() == -3 or self.grid[[0, 1, 2], [2, 1, 0]].sum() == -3:
             self.end = True
             self.winner = 'O'
         # check if all the positions are filled
         elif (self.grid == 0).sum() == 0:
             self.end = True
-            self.winner = None # no one wins
+            self.winner = None  # no one wins
         else:
             self.end = False
             self.winner = None
 
     def reset(self):
         # reset the grid
-        self.grid = np.zeros((3,3))
+        self.grid = np.zeros((3, 3))
         self.end = False
         self.winner = None
         self.num_step = 0
@@ -127,9 +128,11 @@ class TictactoeEnv:
         for i in range(3):
             print('|', end='')
             for j in range(3):
-                print(value2player[int(self.grid[i,j])], end=' ' if j<2 else '')
+                print(value2player[int(self.grid[i, j])],
+                      end=' ' if j < 2 else '')
             print('|')
         print()
+
 
 class OptimalPlayer:
     '''
@@ -148,11 +151,12 @@ class OptimalPlayer:
             at any given time.
 
     '''
+
     def __init__(self, epsilon=0.2, player='X'):
         self.epsilon = epsilon
-        self.player = player # 'x' or 'O'
+        self.player = player  # 'x' or 'O'
 
-    def set_player(self, player = 'X', j=-1):
+    def set_player(self, player='X', j=-1):
         self.player = player
         if j != -1:
             self.player = 'X' if j % 2 == 0 else 'O'
@@ -271,7 +275,7 @@ class OptimalPlayer:
         if np.any(np.sum(grid, axis=0) == target) or np.any(np.sum(grid, axis=1) == target):
             return True
         # check diagnols
-        elif grid[[0,1,2],[0,1,2]].sum() == target or grid[[0,1,2],[2,1,0]].sum() == target:
+        elif grid[[0, 1, 2], [0, 1, 2]].sum() == target or grid[[0, 1, 2], [2, 1, 0]].sum() == target:
             return True
         else:
             return False
@@ -284,7 +288,8 @@ class OptimalPlayer:
         # check rows and cols
         rows = (np.sum(grid, axis=0) == target).sum()
         cols = (np.sum(grid, axis=1) == target).sum()
-        diags = (grid[[0,1,2],[0,1,2]].sum() == target) + (grid[[0,1,2],[2,1,0]].sum() == target)
+        diags = (grid[[0, 1, 2], [0, 1, 2]].sum() == target) + \
+            (grid[[0, 1, 2], [2, 1, 0]].sum() == target)
         if (rows + cols + diags) >= 2:
             return True
         else:
@@ -306,7 +311,7 @@ class OptimalPlayer:
         if random.random() < self.epsilon:
             return self.randomMove(grid)
 
-        ### optimial policies
+        # optimial policies
 
         # Win
         win = self.win(grid)
