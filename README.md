@@ -9,7 +9,7 @@
   <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/EliaFantini/Q-NIM-ai-learns-to-play-Nim-using-standard-and-deep-Q-Learning?label=Watch">
   <img alt="GitHub star" src="https://img.shields.io/github/stars/EliaFantini/Q-NIM-ai-learns-to-play-Nim-using-standard-and-deep-Q-Learning?style=social">
 </p> -->
-#Learning Tic-Tac-Toe with Tabular and Deep Q-learning algorithms - CS-456 Project
+# Learning Tic-Tac-Toe with Tabular and Deep Q-learning algorithms - CS-456 Project
 
 
 <img src="plots\Tictactoeimage\Tic_tac_toe.svg.png" 
